@@ -11,12 +11,12 @@ public class ConnectionPool {
     private static final int DEFAULT_CAPACITY = 10;
 
     private static ConnectionPool connection;
-    static ArrayBlockingQueue<Connection> connections = new ArrayBlockingQueue<>(DEFAULT_CAPACITY);
+    private ArrayBlockingQueue<Connection> connections = new ArrayBlockingQueue<>(DEFAULT_CAPACITY);
     private String url;
 
     public ConnectionPool(String url, int capacity) {
         this.url = url;
-        connections = new ArrayBlockingQueue<Connection>(capacity);
+        connections = new ArrayBlockingQueue<>(capacity);
 
     }
 
@@ -106,7 +106,6 @@ public class ConnectionPool {
         if ((connection != null) && (connections.remainingCapacity() != 0)) {
             connections.add(connection);
         }
-
     }
 
 
