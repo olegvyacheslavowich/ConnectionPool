@@ -9,13 +9,16 @@ import java.util.Arrays;
  */
 public class Main {
 
+    private static final String URL = "jdbc:derby:DerbyDB;create=false";
+
     public static void main(String[] args) throws SQLException, InterruptedException {
 
-        String url = "jdbc:derby:DerbyDB;create=false";
 
-        ConnectionPool pool = ConnectionPool.getInstance(url);
+        ConnectionPool pool = ConnectionPool.getInstance(URL, 20);
         Connection connection = pool.getConnection();
+
         getData(connection);
+
 
         // createDB(connection);
         // setTable(connection);

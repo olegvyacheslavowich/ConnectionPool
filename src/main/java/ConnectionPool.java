@@ -30,14 +30,19 @@ public class ConnectionPool {
      * @return connection
      * @throws SQLException
      */
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         Connection connection;
 
         if (!connections.isEmpty()) {
             connection = connections.poll();
 
-            if (connection.isClosed()) {
+            try {
+                if (connection.isClosed()) {
+                    connection = getConnection();
+                }
+            } catch (SQLException e) {
                 connection = getConnection();
+
             }
         } else {
             connection = newConnection();
@@ -124,5 +129,7 @@ public class ConnectionPool {
         connections.clear();
     }
 
-
+    public ArrayBlockingQueue<Connection> getConnections() {
+        return connections;
+    }
 }
